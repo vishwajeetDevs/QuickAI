@@ -1,7 +1,7 @@
 {
   "version": 2,
   "functions": {
-    "api/server.js": {
+    "server/server.js": {
       "runtime": "vercel-node@22.0.0",
       "memory": 1024,
       "maxDuration": 10
