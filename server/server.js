@@ -12,6 +12,7 @@ connectCloudinary().catch(err => console.error("Cloudinary connection error:", e
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(clerkMiddleware());
 
 app.get("/", (req, res) => {
