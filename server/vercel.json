@@ -12,13 +12,6 @@
       "dest": "/server.js"
     }
   ],
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs18.x",
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  },
   "env": {
     "PORT": "3000"
   }
