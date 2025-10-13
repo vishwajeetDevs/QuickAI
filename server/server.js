@@ -2,31 +2,35 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import { clerkMiddleware, requireAuth } from "@clerk/express";
-import aiRouter from "../routes/aiRoutes.js";
-import connectCloudinary from "../configs/cloudinary.js";
-import userRouter from "../routes/userRoutes.js";
+import aiRouter from "./routes/aiRoutes.js";
+import userRouter from "./routes/userRoutes.js";
+import connectCloudinary from "./configs/cloudinary.js";
+import serverless from "serverless-http";
 
 const app = express();
 
+// Connect Cloudinary
 connectCloudinary().catch(err => console.error("Cloudinary connection error:", err));
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(clerkMiddleware());
+app.use(clerkMiddleware()); // Clerk auth
 
+// Test route
 app.get("/", (req, res) => {
-    res.send("Server is Live !!");
+  res.send("Server is Live !!");
 });
 
-// Your protected routes
+// Protected routes
 app.use("/api/ai", requireAuth(), aiRouter);
 app.use("/api/user", requireAuth(), userRouter);
 
-// Only listen locally
-if (process.env.NODE_ENV !== "production") {
-    const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => console.log(`Local server running on port ${PORT}`));
-}
+// Catch-all 404
+app.use((req, res) => {
+  res.status(404).json({ error: "Route not found" });
+});
 
-export default app;
+// Export handler for Vercel serverless function
+export const handler = serverless(app);
