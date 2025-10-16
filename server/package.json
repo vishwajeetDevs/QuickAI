@@ -25,7 +25,8 @@
     "express": "^5.1.0",
     "multer": "^2.0.2",
     "openai": "^6.2.0",
-    "pdf-parse": "^2.2.6"
+    "pdf-parse": "^2.2.6",
+    "serverless-http": "^4.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
